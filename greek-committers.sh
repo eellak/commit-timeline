@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Create a list of Greek committers
+# Create a list of Greek committers.
 #
 # Diomidis Spinellis, December 2014
 
