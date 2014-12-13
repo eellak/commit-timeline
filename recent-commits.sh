@@ -20,6 +20,6 @@ while : ; do
 			sleep 120
 		done
 	done <users.txt |
-	sort >new.html
+	sort -r >new.html
 	mv new.html current.html
 done
