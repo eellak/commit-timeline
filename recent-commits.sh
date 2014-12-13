@@ -10,20 +10,20 @@
 FROM=$(date +'%FT%TZ' --date='TZ="UTC" -2 days')
 
 while : ; do
-	while read user ; do
-		test -r user-repos/$user || continue
-		sed -n 's/^ *"name": "\([^"]*\)".*/\1/p' user-repos/$user |
-		while read repo ; do
-			curl --silent --get "https://api.github.com/repos/$user/$repo/commits" \
-				--data-urlencode "author=$user" \
-				--data-urlencode "since=$FROM" |
-			tee -a curl.out |
-			jq --raw-output -f filter.jq
-			# Don't decrease unless you query using an API
-			# authentication token.
-			sleep 120
-		done
-	done <users.txt |
-	sort -r >new.html
-	mv new.html current.html
+    while read user ; do
+        test -r user-repos/$user || continue
+        sed -n 's/^ *"name": "\([^"]*\)".*/\1/p' user-repos/$user |
+        while read repo ; do
+            curl --silent --get "https://api.github.com/repos/$user/$repo/commits" \
+                --data-urlencode "author=$user" \
+                --data-urlencode "since=$FROM" |
+            tee -a curl.out |
+            jq --raw-output -f filter.jq
+            # Don't decrease unless you query using an API
+            # authentication token.
+            sleep 120
+        done
+    done <users.txt |
+    sort -r >new.html
+    mv new.html current.html
 done
